@@ -15,7 +15,7 @@
             android:id="@+id/Titolo" android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="10dp"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" tools:ignore="HardcodedText"/>
     <Button
             android:text="Storico 2018"
             android:layout_width="wrap_content"
@@ -23,15 +23,15 @@
             android:id="@+id/BottoneStorico2018"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="10dp" app:layout_constraintTop_toBottomOf="@+id/LabelAutore"
-            android:layout_marginStart="10dp"/>
+            android:layout_marginStart="10dp" tools:ignore="HardcodedText"/>
     <Button
             android:text="Storico 2019"
             android:layout_width="wrap_content"
             android:layout_height="49dp"
             android:id="@+id/BottoneStorico2019"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="10dp" app:layout_constraintTop_toBottomOf="@+id/BottoneStorico2018"
-            android:layout_marginStart="10dp"/>
+            app:layout_constraintTop_toBottomOf="@+id/LabelAutore"
+            android:layout_marginStart="10dp" android:layout_marginTop="10dp"
+            app:layout_constraintStart_toEndOf="@+id/BottoneStorico2018" tools:ignore="HardcodedText"/>
     <TextView
             android:text="Campione in carica:"
             android:layout_width="wrap_content"
@@ -39,7 +39,8 @@
             android:id="@+id/LabelAutore"
             android:layout_marginTop="10dp"
             android:textSize="18sp" app:layout_constraintTop_toBottomOf="@+id/Titolo"
-            android:layout_marginStart="10dp" app:layout_constraintStart_toStartOf="parent"/>
+            android:layout_marginStart="10dp" app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="HardcodedText"/>
     <Spinner
             android:layout_height="0dp"
             android:id="@+id/NomeCampione"
@@ -49,5 +50,40 @@
             app:layout_constraintBottom_toBottomOf="@+id/LabelAutore"
             app:layout_constraintTop_toTopOf="@+id/LabelAutore"
             android:entries="@array/sqaudre"/>
+    <TextView
+            android:text="CLASSIFICA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/TitoloClassifica" android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/BottoneStorico2019" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:textStyle="bold" tools:ignore="HardcodedText"
+            android:textSize="18sp"/>
+    <TableLayout
+            android:layout_width="395dp"
+            android:layout_height="wrap_content" android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/TitoloClassifica" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="10dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="10dp"
+            android:background="@drawable/bordi_tabella_classifica">
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/bordi_tabella_classifica">
+            <TextView android:text="1°" android:layout_weight="1" android:textAlignment="center"
+                      tools:ignore="HardcodedText" android:textSize="18sp"/>
+            <TextView android:id="@+id/primo" android:layout_weight="1" android:textSize="18sp"/>
+            <TextView android:id="@+id/puntiPrimo" android:layout_weight="1" android:textSize="18sp"/>
+        </TableRow>
+
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
+            <TextView android:text="2°" android:layout_weight="1" android:textAlignment="center"
+                      tools:ignore="HardcodedText" android:textSize="18sp"/>
+            <TextView android:id="@+id/secondo" android:layout_weight="1" android:textSize="18sp"/>
+            <TextView android:id="@+id/puntiSecondo" android:layout_weight="1" android:textSize="18sp"/>
+        </TableRow>
+
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/bordi_tabella_classifica">
+            <TextView android:text="3°" android:layout_weight="1" android:textAlignment="center"
+                      tools:ignore="HardcodedText" android:textSize="18sp"/>
+            <TextView android:id="@+id/terzo" android:layout_weight="1" android:textSize="18sp"/>
+            <TextView android:id="@+id/puntiTerzo" android:layout_weight="1" android:textSize="18sp"/>
+        </TableRow>
+    </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 

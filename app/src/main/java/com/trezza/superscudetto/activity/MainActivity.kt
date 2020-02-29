@@ -1,5 +1,6 @@
 package com.trezza.superscudetto
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -11,8 +12,12 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.Button
 import android.widget.Spinner
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.trezza.superscudetto.db.SuperscudettoDbLifecycle
+import com.trezza.superscudetto.entity.babbo
+import com.trezza.superscudetto.entity.fra
+import com.trezza.superscudetto.entity.lele
 import kotlinx.android.synthetic.main.activity_main.*
 
 open class MainActivity : AppCompatActivity() {
@@ -27,6 +32,12 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private var TAG = "ACTIVITY MAIN"
+    lateinit var primo : TextView
+    lateinit var puntiPrimo : TextView
+    lateinit var secondo : TextView
+    lateinit var puntiSecondo : TextView
+    lateinit var terzo : TextView
+    lateinit var puntiTerzo : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +48,46 @@ open class MainActivity : AppCompatActivity() {
         sharedPreferences = getPreferences(Context.MODE_PRIVATE)
         var idSquadra = sharedPreferences.getInt(STRING_KEY, 0)
         NomeCampione.setSelection(idSquadra)
+        caricaComponenti()
+        creaClassifica()
+    }
+
+    private fun caricaComponenti(){
+        primo = findViewById<TextView>(R.id.primo)
+        puntiPrimo = findViewById<TextView>(R.id.puntiPrimo)
+        secondo = findViewById<TextView>(R.id.secondo)
+        puntiSecondo = findViewById<TextView>(R.id.puntiSecondo)
+        terzo = findViewById<TextView>(R.id.terzo)
+        puntiTerzo = findViewById<TextView>(R.id.puntiTerzo)
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun creaClassifica(){
+        val puntiBarcano = superscudettoDb.puntiSquadra(lele)
+        val puntiMorbidiAmici = superscudettoDb.puntiSquadra(fra)
+        val puntiBabbo = superscudettoDb.puntiSquadra(babbo)
+        val p = maxOf(puntiBabbo, puntiBarcano, puntiMorbidiAmici)
+        val u = minOf(puntiBabbo, puntiBarcano, puntiMorbidiAmici)
+        calcolaPosizioneSquadra(p,u,puntiBarcano,"BARCANO'")
+        calcolaPosizioneSquadra(p,u,puntiBabbo,"VINCERA'")
+        calcolaPosizioneSquadra(p,u,puntiMorbidiAmici,"MORBIDI AMICI")
+    }
+
+    private fun calcolaPosizioneSquadra(p : Double, u : Double, puntiSquadra : Double, nomeSquadra : String){
+        when {
+            p == puntiSquadra -> {
+                primo.text = nomeSquadra
+                puntiPrimo.text = puntiSquadra.toString()
+            }
+            u == puntiSquadra -> {
+                terzo.text = nomeSquadra
+                puntiTerzo.text = puntiSquadra.toString()
+            }
+            else -> {
+                secondo.text = nomeSquadra
+                puntiSecondo.text = puntiSquadra.toString()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

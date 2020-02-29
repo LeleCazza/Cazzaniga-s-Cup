@@ -9,7 +9,7 @@ import com.trezza.superscudetto.R
 import com.trezza.superscudetto.entity.*
 
 
-class SuperscudettoDbLifecycle(val context: Context) : DBLifecycle("Superscudetto", 1) {
+class SuperscudettoDbLifecycle(val context: Context) : DBLifecycle("Superscudetto", 2) {
 
   private var TAG = "DATABASE"
 
@@ -22,20 +22,16 @@ class SuperscudettoDbLifecycle(val context: Context) : DBLifecycle("Superscudett
       version,
       createDbQuery
     )
-    //inserisco le superscudettoDb nel database
-    insert(lele)
-    insert(fra)
-    insert(babbo)
-    //inserisco i vecchi punteggi registrati nel databse
+    insertInSquadre(lele)
+    insertInSquadre(fra)
+    insertInSquadre(babbo)
     inserisciDati(Risultati.getStorico(risultatiBarcano2018, risultatiMorbidiAmici2018, risultatiVincera2018, 2018).iterator())
     inserisciDati(Risultati.getStorico(risultatiBarcano2019, risultatiMorbidiAmici2019, risultatiVincera2019, 2019).iterator())
   }
 
   private fun inserisciDati(iterator: Iterator<Risultati>){
-    while(iterator.hasNext()){
-      Log.i("INSERISCO RISULTATO", "DAJJEE")
-      insert(iterator.next())
-    }
+    while(iterator.hasNext())
+      insertInRisultati(iterator.next())
   }
 
   override fun dbVersionChanged(
@@ -55,7 +51,7 @@ class SuperscudettoDbLifecycle(val context: Context) : DBLifecycle("Superscudett
     }
   }
 
-  fun insert(squadre: Squadre): Long {
+  private fun insertInSquadre(squadre: Squadre): Long {
     Log.d(TAG, "INSERT_DB")
     return sqLiteDatabase.insert(
       "SQUADRE",
@@ -69,7 +65,7 @@ class SuperscudettoDbLifecycle(val context: Context) : DBLifecycle("Superscudett
     )
   }
 
-  fun insert(risultati: Risultati): Long {
+  private fun insertInRisultati(risultati: Risultati): Long {
     Log.d(TAG, "INSERT_DB")
     return sqLiteDatabase.insert(
       "RISULTATI",
@@ -80,30 +76,6 @@ class SuperscudettoDbLifecycle(val context: Context) : DBLifecycle("Superscudett
         put("giornata", risultati.giornata)
         put("punti", risultati.punti)
         put("anno", risultati.anno)      }
-    )
-  }
-
-  fun delete(id: Int) : Int{
-    Log.d(TAG, "DELETE_DB")
-    return sqLiteDatabase.delete(
-      "SQUADRE",
-      "${"_id"} = ?",
-      arrayOf("$id")
-    )
-  }
-
-  fun update(squadre: Squadre): Int {
-    Log.d(TAG, "UPDATE_PUNTI_DB");
-    return sqLiteDatabase.update(
-      "SQUADRE",
-      ContentValues().apply {
-        put("_id", squadre.id)
-        put("descrizione", squadre.descrizione)
-        put("nome", squadre.nome)
-        put("massimoPunti", squadre.massimoPunti)
-      },
-      "${"_id"} = ?",
-      arrayOf("${squadre.id}")
     )
   }
 
@@ -128,33 +100,42 @@ class SuperscudettoDbLifecycle(val context: Context) : DBLifecycle("Superscudett
     return null
   }
 
-  fun select(anno: String): List<Risultati>{
-    val Risultati = mutableListOf<Risultati>()
+  fun trovaMassimoPunti(squadra: Squadre): Double{
     Log.d(TAG, "SELECT_DB")
     sqLiteDatabase.query(
       "RISULTATI",
-      null,
-      "${"anno"} = ? ",
-      arrayOf("$anno"),
+      arrayOf("MAX(punti) as punti"),
+      "${"squadra"} = ? ",
+      arrayOf("${squadra.nome}"),
       null,
       null,
       null,
       null
     ).use { cursor ->
-      while (cursor.moveToNext()) {
-        val descrizione = cursor.getString(cursor.getColumnIndex("descrizione"))
-        val squadra = cursor.getString(cursor.getColumnIndex("squadra"))
-        val giornata = cursor.getInt(cursor.getColumnIndex("giornata"))
-        val punti = cursor.getDouble(cursor.getColumnIndex("punti"))
-        val anno = cursor.getInt(cursor.getColumnIndex("anno"))
-        Risultati.add(Risultati(descrizione,squadra,giornata,punti,anno))
-      }
+      cursor.moveToNext()
+      return cursor.getDouble(cursor.getColumnIndex("punti"))
     }
-    return Risultati
+  }
+
+  fun puntiSquadra(squadra: Squadre): Double{
+    Log.d(TAG, "SELECT_DB")
+    sqLiteDatabase.query(
+      "RISULTATI",
+      arrayOf("SUM(punti) as punti"),
+      "squadra = ? AND anno = (SELECT MAX(anno) FROM RISULTATI)",
+      arrayOf("${squadra.nome}"),
+      null,
+      null,
+      null,
+      null
+    ).use { cursor ->
+      cursor.moveToNext()
+      return cursor.getDouble(cursor.getColumnIndex("punti"))
+    }
   }
 
   fun select(id: String, anno: String): List<Risultati>{
-    val Risultati = mutableListOf<Risultati>()
+    val risultati = mutableListOf<Risultati>()
     Log.d(TAG, "SELECT_DB")
     sqLiteDatabase.query(
       "RISULTATI",
@@ -171,10 +152,10 @@ class SuperscudettoDbLifecycle(val context: Context) : DBLifecycle("Superscudett
         val giornata = cursor.getInt(cursor.getColumnIndex("giornata"))
         val punti = cursor.getDouble(cursor.getColumnIndex("punti"))
         val anno = cursor.getInt(cursor.getColumnIndex("anno"))
-        Risultati.add(Risultati(descrizione,squadra,giornata,punti,anno))
+        risultati.add(Risultati(descrizione,squadra,giornata,punti,anno))
       }
     }
-    return Risultati
+    return risultati
   }
 }
 

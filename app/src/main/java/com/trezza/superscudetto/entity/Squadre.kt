@@ -11,7 +11,7 @@ class Squadre(
     var nome: String,
     var massimoPunti: Double){
 
-    fun settaPunti(punti: Double){
+    fun settaMassimoPunti(punti: Double){
         this.massimoPunti = punti
     }
 
@@ -19,7 +19,7 @@ class Squadre(
         return this.descrizione
     }
 
-    fun getPunti() : String{
+    fun getMassimoPunti() : String{
         return this.massimoPunti.toString()
     }
 }

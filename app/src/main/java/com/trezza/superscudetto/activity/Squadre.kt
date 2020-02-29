@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.trezza.superscudetto.MainActivity.Companion.TAG_SQUADRA
 import com.trezza.superscudetto.MainActivity.Companion.superscudettoDb
 import com.trezza.superscudetto.db.SuperscudettoDbLifecycle
+import com.trezza.superscudetto.entity.Squadre
 
 class Squadre : AppCompatActivity() {
 
@@ -40,8 +41,17 @@ class Squadre : AppCompatActivity() {
                 }
             }
             findViewById<TextView>(R.id.Descrizione).text = sq?.getDescription()
-            findViewById<TextView>(R.id.NumeroGiornata).text = "MASSIMO PUNTI = " + sq?.getPunti()
+            setMassimoPuntiSquadra(sq!!)
+            findViewById<TextView>(R.id.MassimoPunti).text = "MASSIMO PUNTI = " + sq?.getMassimoPunti()
         }
+    }
+
+    private fun setMassimoPuntiSquadra(squadra: Squadre){
+        val massimoPuntiStorico = squadra.massimoPunti
+        val massimoPuntiNelDb = superscudettoDb.trovaMassimoPunti(squadra)
+        Log.i("MASSIMO PUNTI DB ", massimoPuntiNelDb.toString())
+        if(massimoPuntiNelDb > massimoPuntiStorico)
+            squadra.settaMassimoPunti(massimoPuntiNelDb)
     }
 
     override fun onStart() {
