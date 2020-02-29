@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Superscudetto</string>
+
+    <string-array name="sqaudre">
+        <item>BARCANO\'</item>
+        <item>MORBIDI AMICI</item>
+        <item>VINCERA\'</item>
+    </string-array>
+</resources>

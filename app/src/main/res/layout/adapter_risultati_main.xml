@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp">
+        <TextView
+                android:textStyle="bold"
+                tools:text="Giornata numero"
+                android:id="@+id/risultatiGiornata1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        <TextView
+                tools:text="Squadra"
+                android:id="@+id/risultatiSquadra1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        <TextView
+                tools:text="Punti"
+                android:id="@+id/risultatiPunti1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+        <TextView
+                android:textStyle="bold"
+                tools:text="Giornata numero"
+                android:id="@+id/risultatiGiornata2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        <TextView
+                tools:text="Squadra"
+                android:id="@+id/risultatiSquadra2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        <TextView
+                tools:text="Punti"
+                android:id="@+id/risultatiPunti2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginRight="10dp">
+        <TextView
+                android:textStyle="bold"
+                tools:text="Giornata numero"
+                android:id="@+id/risultatiGiornata3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        <TextView
+                tools:text="Squadra"
+                android:id="@+id/risultatiSquadra3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        <TextView
+                tools:text="Punti"
+                android:id="@+id/risultatiPunti3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,15 @@
+CREATE TABLE SQUADRE (
+  _id INTEGER PRIMARY KEY,
+  descrizione TEXT,
+  nome TEXT NOT NULL,
+  massimoPunti REAL NOT NULL
+);
+
+CREATE TABLE RISULTATI (
+  _id INTEGER PRIMARY KEY AUTOINCREMENT,
+  descrizione TEXT,
+  squadra TEXT NOT NULL,
+  giornata INTEGER NOT NULL,
+  punti REAL NOT NULL,
+  anno INTEGER NOT NULL
+);

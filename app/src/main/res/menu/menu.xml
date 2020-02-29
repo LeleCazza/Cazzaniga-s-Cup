@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      tools:context=".MainActivity">
+    <item
+            android:id="@+id/MenuBarcano"
+            android:orderInCategory="100"
+            android:title="Barcanò"
+            app:showAsAction="never"/>
+    <item
+            android:id="@+id/MenuMorbidiAmici"
+            android:orderInCategory="100"
+            android:title="Morbidi Amici"
+            app:showAsAction="never"/>
+    <item
+            android:id="@+id/MenuVincera"
+            android:orderInCategory="100"
+            android:title="Vincerà"
+            app:showAsAction="never"/>
+</menu>
+
