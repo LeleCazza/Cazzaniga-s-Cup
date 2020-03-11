@@ -9,7 +9,7 @@ import com.trezza.superscudetto.R
 import com.trezza.superscudetto.entity.*
 
 
-class SuperscudettoDbLifecycle(val context: Context) : DBLifecycle("Superscudetto", 2) {
+class SuperscudettoDbLifecycle(val context: Context) : DBLifecycle("Superscudetto", 1) {
 
   private var TAG = "DATABASE"
 
